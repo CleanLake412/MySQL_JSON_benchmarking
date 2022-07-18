@@ -14,6 +14,8 @@ class MCollection extends Model
      */
     protected $table = 'm_collection';
 
+    protected $primaryKey = 'collection_id';
+
     /**
      * @var string[] 詰め込み可能なフィールド
      */

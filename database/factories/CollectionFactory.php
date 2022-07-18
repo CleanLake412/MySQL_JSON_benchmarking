@@ -106,15 +106,15 @@ class CollectionFactory extends Factory
         // カスタム項目
         foreach ($this->_langIds as $langId) {
             $details[$langId] += [
-                11 => $this->faker->title(),
-                12 => $this->faker->address(),
-                13 => $this->faker->name(),
-                14 => $this->faker->url(),
+                11 => $this->faker->creditCardNumber(),
+                12 => $this->faker->name(),
+                13 => $this->faker->date(),
+                14 => $this->faker->address(),
                 15 => $this->faker->company(),
                 16 => $this->faker->companyEmail(),
                 17 => $this->faker->city(),
-                18 => $this->faker->colorName(),
-                19 => $this->faker->date(),
+                18 => $this->faker->imageUrl(),
+                19 => $this->faker->url(),
                 20 => $this->faker->text()
             ];
         }

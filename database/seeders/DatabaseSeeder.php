@@ -8,6 +8,7 @@ use App\Models\MCollection;
 use Database\Factories\CollectionFactory;
 use Faker\Core\Number;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,14 +23,19 @@ class DatabaseSeeder extends Seeder
 
         //・試験データ件数：　５万件
         $factory = new CollectionFactory();
+        $count = 30000;
 
-        for ($i = 0; $i < 1; $i ++) {
+        $startTime = time();
+        echo 'Start: ' . date('Y-m-d H:i:s');
+        for ($i = 0; $i < $count; $i ++) {
             $record = $factory->definition();
             $details = $record['details'];
             unset($record['details']);
 
             // 収蔵品の登録
-            $collectionId = (new MCollection($record))->save();
+            $collection = new MCollection($record);
+            $collection->save();
+            $collectionId = $collection->collection_id;
 
             foreach ($details as $lang => $detailInfo) {
                 // 収蔵品詳細を登録 (JSON)
@@ -44,17 +50,27 @@ class DatabaseSeeder extends Seeder
                 (new CollectionLang($collectionLangRecord))->save();
 
                 // 収蔵品詳細を登録 (DB)
+                $detailRecords = [];
                 foreach ($detailInfo as $itemId => $itemValue) {
-                    $detailRecord = new CollectionDetail();
-                    $detailRecord->fill([
+                    $detailRecords[] = [
                         'collection_id' => $collectionId,
                         'lang_code' => $lang,
                         'item_id' => $itemId,
                         'item_value' => (is_array($itemValue) ? implode(',', $itemValue) : $itemValue),
-                    ])->save();
+                    ];
                 }
+                DB::table('collection_details')->insert($detailRecords);
+            }
+
+            echo '.';
+            if (($i + 1) % 100 == 0) {
+                echo '  --- ' . ($i+1) . ' / ' . $count
+                    . ' (' . number_format((($i+1) / $count)*100, 1) . ' %)  :  '
+                    . (time()-$startTime) . " s\n";
             }
         }
+
+        echo 'End: ' . date('Y-m-d H:i:s') . '  ---  ' . (time()-$startTime) . " seconds\n";
 
     }
 

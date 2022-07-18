@@ -17,7 +17,7 @@ class CreateCollectionDetailsTable extends Migration
             $table->integer('collection_id')->comment('収蔵品ID');
             $table->smallInteger('lang_code')->comment('言語コード');
             $table->integer('item_id')->comment('収蔵品項目ID');
-            $table->string('collection_note', 2048)->nullable()->comment('値');
+            $table->string('item_value', 2048)->nullable()->comment('値');
 
             $table->primary(['collection_id', 'lang_code', 'item_id']);
         });

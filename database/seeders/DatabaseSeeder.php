@@ -38,8 +38,8 @@ class DatabaseSeeder extends Seeder
                     'lang_code' => $lang,
                     'collection_title' => $this->_randomTitle($lang, $collectionId),
                     'collection_title_kana' => $this->_randomTitle($lang, $collectionId, true),
-                    'common_items' => json_encode(array_slice($detailInfo, 0, 5, true)),
-                    'custom_items' => json_encode(array_slice($detailInfo, 5, null, true)),
+                    'common_items' => array_slice($detailInfo, 0, 5, true),
+                    'custom_items' => array_slice($detailInfo, 5, null, true),
                 ];
                 (new CollectionLang($collectionLangRecord))->save();
 
@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
                         'collection_id' => $collectionId,
                         'lang_code' => $lang,
                         'item_id' => $itemId,
-                        'item_value' => $itemValue,
+                        'item_value' => (is_array($itemValue) ? implode(',', $itemValue) : $itemValue),
                     ])->save();
                 }
             }

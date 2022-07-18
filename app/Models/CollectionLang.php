@@ -14,8 +14,8 @@ class CollectionLang extends Model
      */
     protected $table = 'collection_lang';
 
-    /*protected $casts =[
+    protected $casts =[
         'common_items' => 'array',
         'custom_items' => 'array',
-    ];*/
+    ];
 }

@@ -96,8 +96,8 @@ class CollectionFactory extends Factory
             1 => $this->faker->numerify('######'),
             2 => 'K' . $this->faker->numerify('####') . strtoupper(Str::random(2)),
             3 => $this->_commonItems[3]['values'][0],
-            4 => implode(',', array_splice($this->_commonItems[4]['values'], 0, rand(1,5))),
-            5 => implode(',', array_splice($this->_commonItems[5]['values'], 0, rand(1,2))),
+            4 => array_splice($this->_commonItems[4]['values'], 0, rand(1,5)),
+            5 => array_splice($this->_commonItems[5]['values'], 0, rand(1,2)),
         ];
         foreach ($this->_langIds as $langId) {
             $details[$langId] = $commonFields;
@@ -105,7 +105,7 @@ class CollectionFactory extends Factory
 
         // カスタム項目
         foreach ($this->_langIds as $langId) {
-            $details[$langId] = array_merge($details[$langId], [
+            $details[$langId] += [
                 11 => $this->faker->title(),
                 12 => $this->faker->address(),
                 13 => $this->faker->name(),
@@ -116,7 +116,7 @@ class CollectionFactory extends Factory
                 18 => $this->faker->colorName(),
                 19 => $this->faker->date(),
                 20 => $this->faker->text()
-            ]);
+            ];
         }
 
         // 返却

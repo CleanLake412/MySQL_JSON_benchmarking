@@ -51,7 +51,7 @@ class CollectionFactory extends Factory
             'required' => true,
             'type' => 'select',
             'values' => [1,2,3],
-            'multi' => false,
+            'multi' => true,
         ],
     ];
 
@@ -96,8 +96,8 @@ class CollectionFactory extends Factory
             1 => $this->faker->numerify('######'),
             2 => 'K' . $this->faker->numerify('####') . strtoupper(Str::random(2)),
             3 => $this->_commonItems[3]['values'][0],
-            4 => array_splice($this->_commonItems[4]['values'], 0, rand(1,5)),
-            5 => array_splice($this->_commonItems[5]['values'], 0, rand(1,2)),
+            4 => array_slice($this->_commonItems[4]['values'], 0, rand(1,5)),
+            5 => array_slice($this->_commonItems[5]['values'], 0, rand(1,2)),
         ];
         foreach ($this->_langIds as $langId) {
             $details[$langId] = $commonFields;
